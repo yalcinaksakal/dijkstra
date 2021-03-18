@@ -8,10 +8,12 @@ const board = document.querySelector(".board");
 const clean = document.querySelector(".fas");
 const startNodeEl = document.querySelector(".start");
 const endNodeEl = document.querySelector(".end");
+const warnEl = document.querySelector(".warn");
+const findÊl = document.querySelector(".find");
 
 const nodesArray = {};
 
-let lineStartX, lineStartY, oldColor, startNode;
+let lineStartX, lineStartY, startNode;
 let isDrawingLine = false;
 let line, lineLabel;
 let dijkstraStart = null,
@@ -28,8 +30,7 @@ function lineStart(x, y) {
   lineStartY = y;
   isDrawingLine = true;
   board.style.cursor = "copy";
-  oldColor = startNode.style.background;
-  startNode.style.background = "white";
+
   startNode.style.transform = " translate(-50%, -50%) scale(2)";
   startNode.classList.add("selected");
 }
@@ -37,7 +38,7 @@ function lineStart(x, y) {
 function normalizeStartingNode() {
   isDrawingLine = false;
   board.style.cursor = "default";
-  startNode.style.background = oldColor;
+
   startNode.style.transform = " translate(-50%, -50%) scale(1)";
   startNode.classList.remove("selected");
 }
@@ -57,7 +58,18 @@ function drawLine(x, y, endId) {
   );
 }
 
+const unsign = (...ids) =>
+  ids.forEach(id =>
+    document.getElementById(`node${id}`)?.classList.remove("signNode")
+  );
+const sign = (...ids) =>
+  ids.forEach(id =>
+    document.getElementById(`node${id}`)?.classList.add("signNode")
+  );
+
 function dijkstraElementSetup(start, end) {
+  unsign(dijkstraStart, dijkstraEnd);
+  sign(start, end);
   dijkstraStart = start;
   dijkstraEnd = end;
   console.log(start, end);
@@ -75,10 +87,28 @@ function setDiskstra(id) {
   }
 }
 
+function showWarn() {
+  warnEl.hidden = false;
+  setTimeout(() => (warnEl.hidden = true), 1500);
+}
+
+function dijkstra() {
+  if (!dijkstraEnd || !dijkstraStart) {
+    showWarn();
+    return;
+  }
+  ///////////shortest path
+}
+
 const pxToInt = px => +px.slice(0, -2);
+
 function addElements(e) {
+  const find = e.target.closest(".find");
+  if (find) return;
+
   const clean = e.target.closest(".fas");
   if (clean) return;
+
   const node = e.target.closest(".node");
 
   //rigt click to choose start end nodes for shortest path
@@ -149,12 +179,8 @@ function hoverLineProps(e) {
   hoverLine(line, lineLabel);
 }
 
-// function chooseStartEnd(e) {
-//   e.preventDefault();
-//   console.log(e.pageX, e.pageY);
-// }
-
 board.addEventListener("mouseup", addElements);
 clean.addEventListener("click", () => (board.textContent = ""));
 board.addEventListener("mouseover", hoverLineProps);
 board.addEventListener("contextmenu", e => e.preventDefault());
+findÊl.addEventListener("click", dijkstra);
