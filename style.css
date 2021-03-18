@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap");
+
+body {
+  font-family: Lato, sans-serif;
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+.fas {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 30px;
+  background: rgba(49, 49, 49, 0.374);
+  padding: 6px;
+  border-radius: 6px;
+  color: #3e82f7;
+  z-index: 5;
+  transition: all ease 0.3s;
+}
+.fas:hover {
+  box-shadow: 0 1px 3px 1px black;
+}
+.message {
+  position: fixed;
+  font-size: 12px;
+  top: 0;
+  right: 10px;
+  color: rgba(32, 31, 31, 0.639);
+  z-index: 5;
+}
+.board {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(to top, whitesmoke, rgb(213, 212, 212));
+
+  user-select: none;
+}
+
+.node-area {
+  position: absolute;
+  height: 35px;
+  width: 35px;
+}
+.node {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  /* background: rgba(88, 211, 92, 0.455); */
+  box-shadow: inset -2px -1px 3.5px 2px rgba(0, 0, 0, 0.35);
+  border-radius: 50%;
+  cursor: copy;
+  z-index: 1;
+}
+
+.node:hover,
+.selected {
+  filter: brightness(1.5);
+  box-shadow: 0 1px 3px 1px black;
+}
+
+.label {
+  position: absolute;
+  height: 10px;
+  min-width: 10px;
+  text-align: center;
+  font-size: 8px;
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+.line {
+  background-color: rgba(7, 7, 7, 0.293);
+  height: 1px;
+}
+
+.label:hover {
+  font-size: 15px;
+}
