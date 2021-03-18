@@ -16,8 +16,22 @@
     <script type="module" defer src="./script.js"></script>
   </head>
   <body>
+    <div class="dijkstra">
+      <div class="find" title="Find shortest path.">Find</div>
+      &nbsp shortest path from node &nbsp
+      <div class="start">-</div>
+      &nbsp to &nbsp
+      <div class="end">-</div>
+      <div class="animate">Animate</div>
+    </div>
     <i class="fas fa-broom" title="Delete all nodes"></i>
-    <div class="message">Click to add nodes. Click nodes to connect them.</div>
+    <div class="message">
+      Click space to add a node there.<br />
+      Click nodes to connect them.<br />
+      Right click to choose nodes between which shortest path will be found.<br />
+      Click "Find" to get shortest path.<br />
+      Click "Animate" to animate Dijkstra.
+    </div>
     <div class="board"></div>
   </body>
 </html>

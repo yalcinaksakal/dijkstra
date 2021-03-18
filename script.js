@@ -6,11 +6,16 @@ import Node from "./graph.js";
 
 const board = document.querySelector(".board");
 const clean = document.querySelector(".fas");
+const startNodeEl = document.querySelector(".start");
+const endNodeEl = document.querySelector(".end");
+
 const nodesArray = {};
 
 let lineStartX, lineStartY, oldColor, startNode;
 let isDrawingLine = false;
 let line, lineLabel;
+let dijkstraStart = null,
+  dijkstraEnd = null;
 
 function addNode(x, y) {
   const nodeObj = createNode(x, y);
@@ -25,6 +30,7 @@ function lineStart(x, y) {
   board.style.cursor = "copy";
   oldColor = startNode.style.background;
   startNode.style.background = "white";
+  startNode.style.transform = " translate(-50%, -50%) scale(2)";
   startNode.classList.add("selected");
 }
 
@@ -32,6 +38,7 @@ function normalizeStartingNode() {
   isDrawingLine = false;
   board.style.cursor = "default";
   startNode.style.background = oldColor;
+  startNode.style.transform = " translate(-50%, -50%) scale(1)";
   startNode.classList.remove("selected");
 }
 
@@ -50,12 +57,36 @@ function drawLine(x, y, endId) {
   );
 }
 
-const pxToInt = px => +px.slice(0, -2);
+function dijkstraElementSetup(start, end) {
+  dijkstraStart = start;
+  dijkstraEnd = end;
+  console.log(start, end);
+  startNodeEl.textContent = start;
+  endNodeEl.textContent = end ? end : "-";
+}
 
+function setDiskstra(id) {
+  if ((dijkstraStart && dijkstraEnd) || (!dijkstraEnd && !dijkstraStart)) {
+    dijkstraElementSetup(id, null);
+    return;
+  }
+  if (dijkstraStart) {
+    dijkstraElementSetup(dijkstraStart, id);
+  }
+}
+
+const pxToInt = px => +px.slice(0, -2);
 function addElements(e) {
   const clean = e.target.closest(".fas");
   if (clean) return;
   const node = e.target.closest(".node");
+
+  //rigt click to choose start end nodes for shortest path
+  if (e.which === 3 && node) {
+    setDiskstra(idToInt(node.id));
+    return;
+  }
+
   let x, y;
   if (node) {
     x = pxToInt(node.style.left);
@@ -118,6 +149,12 @@ function hoverLineProps(e) {
   hoverLine(line, lineLabel);
 }
 
+// function chooseStartEnd(e) {
+//   e.preventDefault();
+//   console.log(e.pageX, e.pageY);
+// }
+
 board.addEventListener("mouseup", addElements);
 clean.addEventListener("click", () => (board.textContent = ""));
 board.addEventListener("mouseover", hoverLineProps);
+board.addEventListener("contextmenu", e => e.preventDefault());
