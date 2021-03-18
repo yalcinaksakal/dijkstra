@@ -1,44 +1,21 @@
 "use strict";
+
+import createNode from "./createNode.js";
 import drawer from "./drawer.js";
+import Node from "./graph.js";
+
 const board = document.querySelector(".board");
 const clean = document.querySelector(".fas");
+const nodesArray = {};
 
-let id = 0,
-  lineStartX,
-  lineStartY,
-  oldColor,
-  startNode;
+let lineStartX, lineStartY, oldColor, startNode;
 let isDrawingLine = false;
-
-const rndm255 = () => Math.floor(Math.random() * 256);
-const randomRGB = () => `rgb(${rndm255()},${rndm255()},${rndm255()})`;
+let line, lineLabel;
 
 function addNode(x, y) {
-  const nodeArea = document.createElement("div");
-  nodeArea.classList.add("node-area");
-  nodeArea.style.left = x + "px";
-  nodeArea.style.top = y + "px";
-  nodeArea.style.transform = "translate(-50%,-50%)";
-
-  const node = document.createElement("div");
-  node.classList.add("node");
-  node.style.background = randomRGB();
-  node.setAttribute("id", "node" + id);
-  id++;
-  node.style.left = x + "px";
-  node.style.top = y + "px";
-  node.style.transform = "translate(-50%,-50%)";
-
-  const nodeLabel = document.createElement("div");
-  nodeLabel.classList.add("label");
-  nodeLabel.classList.add("nodeLabel");
-  nodeLabel.setAttribute("id", "nodeLabel" + id);
-  nodeLabel.style.left = x + "px";
-  nodeLabel.style.top = y - 12 + "px";
-  nodeLabel.style.transform = "translate(-50%,-50%)";
-  nodeLabel.textContent = id;
-
-  board.append(nodeLabel, node, nodeArea);
+  const nodeObj = createNode(x, y);
+  nodesArray[nodeObj.id] = new Node(nodeObj.id);
+  board.append(nodeObj.nodeLabel, nodeObj.node, nodeObj.nodeArea);
 }
 
 function lineStart(x, y) {
@@ -58,13 +35,19 @@ function normalizeStartingNode() {
   startNode.classList.remove("selected");
 }
 
+const idToInt = id => +id.slice(4);
 function drawLine(x, y, endId) {
   normalizeStartingNode();
   const lineObj =
     x < lineStartX
       ? drawer(x, y, lineStartX, lineStartY, endId, startNode.id)
       : drawer(lineStartX, lineStartY, x, y, startNode.id, endId);
+
   if (lineObj) board.append(lineObj.line, lineObj.lineLabel);
+  nodesArray[idToInt(startNode.id)].addNeighbour(
+    nodesArray[idToInt(endId)],
+    lineObj.distance
+  );
 }
 
 const pxToInt = px => +px.slice(0, -2);
@@ -105,21 +88,36 @@ function addElements(e) {
   }
   //if clicked pos is within another nodes area return. We dont want nodes to overlap
   if (e.target.closest(".node-area")) {
-    console.log(!e.target.closest(".node-area"));
     return;
   }
   //clean new area is clicked, add node
   addNode(x, y);
 }
 
-// function hoverLineProps(e) {
-//   const line = e.target.closest(".line");
-//   const lineLabel = e.target.closest(".lineLabel");
-//   if (!line && !lineLabel) return;
-//   const id = line ? line.id : lineLabel.id;
-//   console.log(id);
-// }
+function hoverLine(line, lineLabel) {
+  line.classList.add("line-hover");
+  lineLabel.classList.add("lineLabel-hover");
+}
+function removeHoverLine(line, lineLabel) {
+  line.classList.remove("line-hover");
+  lineLabel.classList.remove("lineLabel-hover");
+}
+
+function hoverLineProps(e) {
+  if (lineLabel) removeHoverLine(line, lineLabel);
+  line = e.target.closest(".line");
+  lineLabel = e.target.closest(".lineLabel");
+  //for adding line hover too, uncomment
+  //   if (!line && !lineLabel) return;
+  //   const id = line ? line.id.slice(4) : lineLabel.id.slice(9);
+  //   if (line) lineLabel = document.getElementById("lineLabel" + id);
+  //   else line = document.getElementById("line" + id);
+  if (!lineLabel) return;
+  const id = line ? line.id.slice(4) : lineLabel.id.slice(9);
+  line = document.getElementById("line" + id);
+  hoverLine(line, lineLabel);
+}
 
 board.addEventListener("mouseup", addElements);
 clean.addEventListener("click", () => (board.textContent = ""));
-// body.addEventListener("mouseover", hoverLineProps);
+board.addEventListener("mouseover", hoverLineProps);

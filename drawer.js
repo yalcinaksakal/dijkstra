@@ -1,5 +1,7 @@
 export default function drawer(x1, y1, x2, y2, id1, id2) {
-  const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  const distance = Math.sqrt(
+    Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)
+  ).toFixed(0);
   const angle = (Math.atan2(-y1 + y2, x2 - x1) * 180) / Math.PI;
 
   //bring all the work together
@@ -29,7 +31,7 @@ export default function drawer(x1, y1, x2, y2, id1, id2) {
 
   lineLabel.style.left = (x2 + x1) / 2 + "px";
   lineLabel.style.top = (y2 + y1) / 2 + "px";
-  lineLabel.textContent = `${distance.toFixed(0)}px`;
+  lineLabel.textContent = `${distance}px`;
   //angle
   lineLabel.style.transformOrigin = "top left";
   lineLabel.style.transform = "rotate(" + angle + "deg) translateX(-50%)";
