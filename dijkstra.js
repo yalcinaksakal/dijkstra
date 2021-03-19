@@ -13,25 +13,6 @@ function dijkstraInit(start) {
   visitArray[0] = 1; //there is not  a node with id 0
 }
 
-// function setNewDistance(nId, node) {
-//   dijkstra[nid].distance =
-//     nodesObj[node].neighbours[nId].distance + dijkstry[node].distance;
-//   dijkstra[nId].path = [...dijkstra[node].path, nId];
-// }
-
-// function shortestPath(node) {
-//   Object.keys(nodesObj[node].neighbours).forEach(nId => {
-//     if (!dijkstra[nId]) {
-//       setNewDistance(nId, node);
-//     } else if (
-//       dijkstra[nId].distance >
-//       nodesObj[node].neighbours[nId].distance + dijkstry[node].distance
-//     ) {
-//       setNewDistance(nId, node);
-//     }
-//   });
-// }
-
 function setNewShortesPath(nodeId, neighbourId, newDistance) {
   previousNode[neighbourId] = nodeId;
   dijkstra[neighbourId] = newDistance;
@@ -73,6 +54,4 @@ function shortestPath(nodeId) {
 export default function dijkstraAction(start) {
   dijkstraInit(start);
   shortestPath(start);
-  console.log(dijkstra, previousNode);
-  //   console.log(dijkstra, visitArray);
 }

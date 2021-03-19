@@ -40,8 +40,7 @@ body {
 }
 .animate,
 .find,
-.start,
-.end {
+.start {
   padding: 7px;
   background: rgba(235, 235, 235, 0.374);
   border-radius: 6px;

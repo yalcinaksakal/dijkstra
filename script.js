@@ -159,7 +159,7 @@ function hoverLineProps(e) {
   if (lineLabel) removeHoverLine(line, lineLabel);
   line = e.target.closest(".line");
   lineLabel = e.target.closest(".lineLabel");
-  //for adding line hover too, uncomment
+  //for adding line hover (now just hovering over labels results in animation) too, uncomment
   //   if (!line && !lineLabel) return;
   //   const id = line ? line.id.slice(4) : lineLabel.id.slice(9);
   //   if (line) lineLabel = document.getElementById("lineLabel" + id);
