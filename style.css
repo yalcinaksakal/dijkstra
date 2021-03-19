@@ -41,6 +41,9 @@ body {
   margin: 3px 0;
   overflow-y: auto;
 }
+
+/* ------------------------------ */
+/* sresultd */
 .results {
   padding: 0;
   display: flex;
@@ -48,6 +51,7 @@ body {
   align-items: start;
   justify-content: start;
 }
+
 .dijkstra {
   position: fixed;
   bottom: 20vh;
@@ -177,6 +181,11 @@ body {
 
 .signNode {
   border: 10px solid rgba(255, 255, 255, 0.367);
+}
+
+.highlight-noPath {
+  background: rgb(0, 0, 0) !important;
+  border: 10px solid rgb(250, 165, 165);
 }
 
 /* ------------------------------ */

@@ -4,13 +4,14 @@ import { createNode, init } from "./createNode.js";
 import drawer from "./drawer.js";
 import Node from "./graph.js";
 import dijkstraAction from "./dijkstra.js";
-import renderResults from "./renderResults.js";
+import { renderResults, removehighlightPrev } from "./renderResults.js";
 
 const board = document.querySelector(".board");
 const clean = document.querySelector(".fas");
 const startNodeEl = document.querySelector(".start");
 const warnEl = document.querySelector(".warn");
 const findÊl = document.querySelector(".find");
+const resultsEl = document.querySelector(".results");
 
 export let nodesObj = {};
 
@@ -94,6 +95,10 @@ const pxToInt = px => +px.slice(0, -2);
 
 //callback function of mouse events on board
 function addElements(e) {
+  if (resultsEl.textContent) {
+    removehighlightPrev();
+    resultsEl.textContent = "";
+  }
   const find = e.target.closest(".find");
   if (find) return;
 
@@ -102,8 +107,8 @@ function addElements(e) {
 
   const node = e.target.closest(".node");
 
-  //rigt click to choose start end nodes for shortest path
   if (e.which === 3 && node) {
+    //rigt click to choose start end nodes for shortest path
     setDijkstra(idToInt(node.id));
     return;
   }

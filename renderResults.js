@@ -1,30 +1,42 @@
 import { nodesObj } from "./script.js";
 
 const resultsEl = document.querySelector(".results");
-const noPathArray = [];
+let noPathArray = [];
+
+export function removehighlightPrev() {
+  noPathArray.forEach(node =>
+    document.getElementById(`node${node}`).classList.remove("highlight-noPath")
+  );
+}
+function highlightUnaccessableNodes() {
+  noPathArray.forEach(node =>
+    document.getElementById(`node${node}`).classList.add("highlight-noPath")
+  );
+}
 
 function hoverResults(e) {
-  console.log("hover");
   removehighlightPrev();
   const noPathEl = e.target.closest(".no-path");
   if (noPathEl) {
     highlightUnaccessableNodes();
     return;
   }
-  const pathEl = e.target.closest(".path");
-  if (pathEl) {
-    highlightPath(pathEl.id);
-    return;
-  }
+
+  //   const pathEl = e.target.closest(".path");
+  //   if (pathEl) {
+  //     highlightPath(pathEl.id);
+  //     return;
+  //   }
 }
 
-export default function renderResults(start, results) {
-  console.log(start, results);
-
+export function renderResults(start, results) {
   resultsEl.textContent = "";
   //create DOM elements
   // render unaccessible nodes
   let pathText = "";
+  //removehighlightPrev();
+  noPathArray = [];
+
   Object.keys(nodesObj).forEach(node => {
     if (results.shortestDistanceToNodes[node] === undefined) {
       noPathArray.push(+node);
