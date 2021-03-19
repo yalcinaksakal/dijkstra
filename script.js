@@ -4,6 +4,7 @@ import { createNode, init } from "./createNode.js";
 import drawer from "./drawer.js";
 import Node from "./graph.js";
 import dijkstraAction from "./dijkstra.js";
+import renderResults from "./renderResults.js";
 
 const board = document.querySelector(".board");
 const clean = document.querySelector(".fas");
@@ -85,7 +86,7 @@ function dijkstra() {
     showWarn();
     return;
   }
-  dijkstraAction(dijkstraStart);
+  renderResults(dijkstraStart, dijkstraAction(dijkstraStart));
 }
 // --------------------------------------------------------
 

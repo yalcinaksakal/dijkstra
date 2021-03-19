@@ -30,10 +30,8 @@ body {
   top: 79vh;
   left: 10px;
   height: 18vh;
-  width: 380px;
+  width: 345px;
   font-size: 15px;
-  background: rgba(235, 235, 235, 0.374);
-
   border-radius: 6px;
 }
 .scroll {
@@ -42,12 +40,13 @@ body {
   height: 95%;
   margin: 3px 0;
   overflow-y: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .results {
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
 }
 .dijkstra {
   position: fixed;

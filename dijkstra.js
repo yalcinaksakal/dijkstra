@@ -31,7 +31,7 @@ function shortestPath(nodeId) {
       setNewShortesPath(nodeId, neighbourId, newDistance);
   });
 
-  //find which node to visit ana visit it
+  //find which node to visit and visit it
   nodeToVisit = null;
   newDistance = 0;
   //choose from unvisited nodes which is accassable(dijkstra[id] is not null) and have min distance
@@ -54,4 +54,5 @@ function shortestPath(nodeId) {
 export default function dijkstraAction(start) {
   dijkstraInit(start);
   shortestPath(start);
+  return { shortestDistanceToNodes: dijkstra, path: previousNode };
 }
