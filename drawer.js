@@ -36,5 +36,10 @@ export default function drawer(x1, y1, x2, y2, id1, id2) {
   lineLabel.style.transformOrigin = "top left";
   lineLabel.style.transform = "rotate(" + angle + "deg) translateX(-50%)";
 
-  return { line: line, lineLabel: lineLabel, distance: distance };
+  return {
+    line: line,
+    lineLabel: lineLabel,
+    distance: distance,
+    id: "lineLabel" + id,
+  };
 }

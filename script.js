@@ -3,6 +3,7 @@
 import createNode from "./createNode.js";
 import drawer from "./drawer.js";
 import Node from "./graph.js";
+import dijkstraAction from "./dijkstra.js";
 
 const board = document.querySelector(".board");
 const clean = document.querySelector(".fas");
@@ -11,7 +12,7 @@ const endNodeEl = document.querySelector(".end");
 const warnEl = document.querySelector(".warn");
 const findÊl = document.querySelector(".find");
 
-const nodesArray = {};
+export const nodesObj = {};
 
 let lineStartX, lineStartY, startNode;
 let isDrawingLine = false;
@@ -21,7 +22,7 @@ let dijkstraStart = null,
 
 function addNode(x, y) {
   const nodeObj = createNode(x, y);
-  nodesArray[nodeObj.id] = new Node(nodeObj.id);
+  nodesObj[nodeObj.id] = new Node(nodeObj.id);
   board.append(nodeObj.nodeLabel, nodeObj.node, nodeObj.nodeArea);
 }
 
@@ -44,6 +45,7 @@ function normalizeStartingNode() {
 }
 
 const idToInt = id => +id.slice(4);
+
 function drawLine(x, y, endId) {
   normalizeStartingNode();
   const lineObj =
@@ -52,9 +54,10 @@ function drawLine(x, y, endId) {
       : drawer(lineStartX, lineStartY, x, y, startNode.id, endId);
 
   if (lineObj) board.append(lineObj.line, lineObj.lineLabel);
-  nodesArray[idToInt(startNode.id)].addNeighbour(
-    nodesArray[idToInt(endId)],
-    lineObj.distance
+  nodesObj[idToInt(startNode.id)].addNeighbour(
+    nodesObj[idToInt(endId)],
+    lineObj.distance,
+    lineObj.id
   );
 }
 
@@ -72,7 +75,6 @@ function dijkstraElementSetup(start, end) {
   sign(start, end);
   dijkstraStart = start;
   dijkstraEnd = end;
-  console.log(start, end);
   startNodeEl.textContent = start;
   endNodeEl.textContent = end ? end : "-";
 }
@@ -97,7 +99,8 @@ function dijkstra() {
     showWarn();
     return;
   }
-  ///////////shortest path
+
+  dijkstraAction(dijkstraStart, dijkstraEnd);
 }
 
 const pxToInt = px => +px.slice(0, -2);

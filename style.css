@@ -62,7 +62,7 @@ body {
   position: fixed;
   font-size: 12px;
   text-align: right;
-  bottom: 0;
+  bottom: 5px;
   right: 5px;
   color: rgba(32, 31, 31, 0.639);
   z-index: 5;
