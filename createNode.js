@@ -3,7 +3,7 @@ const randomRGB = () => `rgb(${rndm255()},${rndm255()},${rndm255()})`;
 
 let id = 0;
 
-export default function createNode(x, y) {
+export function createNode(x, y) {
   const nodeArea = document.createElement("div");
   nodeArea.classList.add("node-area");
   nodeArea.style.left = x + "px";
@@ -28,4 +28,8 @@ export default function createNode(x, y) {
   nodeLabel.style.transform = "translate(-50%,-50%)";
   nodeLabel.textContent = id;
   return { nodeArea: nodeArea, node: node, nodeLabel: nodeLabel, id: id };
+}
+
+export function init() {
+  id = 0;
 }

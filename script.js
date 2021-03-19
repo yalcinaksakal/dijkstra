@@ -1,6 +1,6 @@
 "use strict";
 
-import createNode from "./createNode.js";
+import { createNode, init } from "./createNode.js";
 import drawer from "./drawer.js";
 import Node from "./graph.js";
 import dijkstraAction from "./dijkstra.js";
@@ -8,24 +8,23 @@ import dijkstraAction from "./dijkstra.js";
 const board = document.querySelector(".board");
 const clean = document.querySelector(".fas");
 const startNodeEl = document.querySelector(".start");
-const endNodeEl = document.querySelector(".end");
 const warnEl = document.querySelector(".warn");
 const findÊl = document.querySelector(".find");
 
-export const nodesObj = {};
+export let nodesObj = {};
 
 let lineStartX, lineStartY, startNode;
 let isDrawingLine = false;
 let line, lineLabel;
-let dijkstraStart = null,
-  dijkstraEnd = null;
+let dijkstraStart = null;
 
+//data and DOM of new nodes
 function addNode(x, y) {
   const nodeObj = createNode(x, y);
   nodesObj[nodeObj.id] = new Node(nodeObj.id);
   board.append(nodeObj.nodeLabel, nodeObj.node, nodeObj.nodeArea);
 }
-
+// Lines---------------------------------------------------------
 function lineStart(x, y) {
   lineStartX = x;
   lineStartY = y;
@@ -60,33 +59,20 @@ function drawLine(x, y, endId) {
     lineObj.id
   );
 }
+//---------------------------------------------------------
 
-const unsign = (...ids) =>
-  ids.forEach(id =>
-    document.getElementById(`node${id}`)?.classList.remove("signNode")
-  );
-const sign = (...ids) =>
-  ids.forEach(id =>
-    document.getElementById(`node${id}`)?.classList.add("signNode")
-  );
+// dijkstra---------------------------------------------------------
+const unsign = id =>
+  document.getElementById(`node${id}`)?.classList.remove("signNode");
+const sign = id =>
+  document.getElementById(`node${id}`)?.classList.add("signNode");
 
-function dijkstraElementSetup(start, end) {
-  unsign(dijkstraStart, dijkstraEnd);
-  sign(start, end);
+function setDijkstra(start) {
+  unsign(dijkstraStart);
+  sign(start);
   dijkstraStart = start;
-  dijkstraEnd = end;
-  startNodeEl.textContent = start;
-  endNodeEl.textContent = end ? end : "-";
-}
 
-function setDiskstra(id) {
-  if ((dijkstraStart && dijkstraEnd) || (!dijkstraEnd && !dijkstraStart)) {
-    dijkstraElementSetup(id, null);
-    return;
-  }
-  if (dijkstraStart) {
-    dijkstraElementSetup(dijkstraStart, id);
-  }
+  startNodeEl.textContent = start;
 }
 
 function showWarn() {
@@ -95,16 +81,17 @@ function showWarn() {
 }
 
 function dijkstra() {
-  if (!dijkstraEnd || !dijkstraStart) {
+  if (!dijkstraStart) {
     showWarn();
     return;
   }
-
-  dijkstraAction(dijkstraStart, dijkstraEnd);
+  dijkstraAction(dijkstraStart);
 }
+// --------------------------------------------------------
 
 const pxToInt = px => +px.slice(0, -2);
 
+//callback function of mouse events on board
 function addElements(e) {
   const find = e.target.closest(".find");
   if (find) return;
@@ -116,7 +103,7 @@ function addElements(e) {
 
   //rigt click to choose start end nodes for shortest path
   if (e.which === 3 && node) {
-    setDiskstra(idToInt(node.id));
+    setDijkstra(idToInt(node.id));
     return;
   }
 
@@ -158,6 +145,7 @@ function addElements(e) {
   addNode(x, y);
 }
 
+// hovering effect on lines---------------------------------------------------------
 function hoverLine(line, lineLabel) {
   line.classList.add("line-hover");
   lineLabel.classList.add("lineLabel-hover");
@@ -181,9 +169,15 @@ function hoverLineProps(e) {
   line = document.getElementById("line" + id);
   hoverLine(line, lineLabel);
 }
+// ---------------------------------------------------------
 
+/////Event listeners
 board.addEventListener("mouseup", addElements);
-clean.addEventListener("click", () => (board.textContent = ""));
+clean.addEventListener("click", () => {
+  init();
+  nodesObj = {};
+  board.textContent = "";
+});
 board.addEventListener("mouseover", hoverLineProps);
 board.addEventListener("contextmenu", e => e.preventDefault());
 findÊl.addEventListener("click", dijkstra);

@@ -70,7 +70,7 @@ function shortestPath(nodeId) {
   }
 }
 
-export default function dijkstraAction(start, end) {
+export default function dijkstraAction(start) {
   dijkstraInit(start);
   shortestPath(start);
   console.log(dijkstra, previousNode);
