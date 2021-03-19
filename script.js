@@ -12,6 +12,7 @@ const startNodeEl = document.querySelector(".start");
 const warnEl = document.querySelector(".warn");
 const findÊl = document.querySelector(".find");
 const resultsEl = document.querySelector(".results");
+const insructions = document.querySelector(".instructions");
 
 export let nodesObj = {};
 
@@ -96,6 +97,7 @@ const pxToInt = px => +px.slice(0, -2);
 
 //callback function of mouse events on board
 function addElements(e) {
+  if (!insructions.hidden) insructions.hidden = true;
   if (resultsEl.textContent) {
     removehighlightPrev();
     resultsEl.textContent = "";
