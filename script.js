@@ -40,9 +40,10 @@ function lineStart(x, y) {
 function normalizeStartingNode() {
   isDrawingLine = false;
   board.style.cursor = "default";
-
-  startNode.style.transform = " translate(-50%, -50%) scale(1)";
-  startNode.classList.remove("selected");
+  if (startNode) {
+    startNode.style.transform = " translate(-50%, -50%) scale(1)";
+    startNode.classList.remove("selected");
+  }
 }
 
 const idToInt = id => +id.slice(4);

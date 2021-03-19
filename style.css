@@ -9,6 +9,7 @@ body {
   padding: 0;
   user-select: none;
   overflow: hidden;
+  transition: all ease 0.3s;
 }
 .fas {
   position: fixed;
@@ -187,7 +188,19 @@ body {
   background: rgb(0, 0, 0) !important;
   border: 10px solid rgb(250, 165, 165);
 }
+.path-line {
+  background: rgb(106, 251, 106);
+  height: 2px;
+}
+.lineLabel-path {
+  font-size: 15px;
+}
 
+.selected2 {
+  background-color: rgb(88, 166, 245);
+  color: white;
+  border-radius: 5px;
+}
 /* ------------------------------ */
 /* scroll bar */
 ::-webkit-scrollbar {
