@@ -109,6 +109,7 @@ function addElements(e) {
 
   if (e.which === 3 && node) {
     //rigt click to choose start end nodes for shortest path
+    normalizeStartingNode();
     setDijkstra(idToInt(node.id));
     return;
   }
@@ -185,6 +186,8 @@ clean.addEventListener("click", () => {
   init();
   nodesObj = {};
   board.textContent = "";
+  resultsEl.textContent = "";
+  startNodeEl.textContent = "-";
 });
 board.addEventListener("mouseover", hoverLineProps);
 board.addEventListener("contextmenu", e => e.preventDefault());
