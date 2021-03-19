@@ -237,6 +237,9 @@ body {
   .results-container {
     width: 60%;
   }
+  .board{
+    height: 70vh;
+  }
 }
 @media screen and (max-width: 450px) {
   .dijkstra,

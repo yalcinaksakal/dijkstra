@@ -76,7 +76,6 @@ function setDijkstra(start) {
   if (start) sign(start);
   normalizeStartingNode();
   dijkstraStart = start;
-
   startNodeEl.textContent = start;
 }
 
@@ -86,13 +85,13 @@ function showWarn() {
 }
 
 function dijkstra() {
-  //startNode
-  if (!dijkstraStart && !startNode) {
-    showWarn();
-    return;
-  }
-  if (!dijkstraStart) {
-    setDijkstra(idToInt(startNode.id));
+   if (!dijkstraStart) {
+    const fakeRightClickEl = document.querySelector(".selected");
+    if (!fakeRightClickEl) {
+      showWarn();
+      return;
+    }
+    setDijkstra(idToInt(fakeRightClickEl.id));
   }
   renderResults(dijkstraStart, dijkstraAction(dijkstraStart));
 }
