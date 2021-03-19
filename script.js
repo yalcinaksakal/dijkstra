@@ -73,7 +73,8 @@ const sign = id =>
 
 function setDijkstra(start) {
   unsign(dijkstraStart);
-  sign(start);
+  if (start) sign(start);
+  normalizeStartingNode();
   dijkstraStart = start;
 
   startNodeEl.textContent = start;
@@ -85,9 +86,13 @@ function showWarn() {
 }
 
 function dijkstra() {
-  if (!dijkstraStart) {
+  //startNode
+  if (!dijkstraStart && !startNode) {
     showWarn();
     return;
+  }
+  if (!dijkstraStart) {
+    setDijkstra(idToInt(startNode.id));
   }
   renderResults(dijkstraStart, dijkstraAction(dijkstraStart));
 }
@@ -100,6 +105,7 @@ function addElements(e) {
   if (!insructions.hidden) insructions.hidden = true;
   if (resultsEl.textContent) {
     removehighlightPrev();
+    setDijkstra(null);
     resultsEl.textContent = "";
   }
   const find = e.target.closest(".find");
@@ -191,6 +197,7 @@ clean.addEventListener("click", () => {
   board.textContent = "";
   resultsEl.textContent = "";
   startNodeEl.textContent = "-";
+  dijkstraStart = null;
 });
 board.addEventListener("mouseover", hoverLineProps);
 board.addEventListener("contextmenu", e => e.preventDefault());
