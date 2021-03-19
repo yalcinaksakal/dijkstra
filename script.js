@@ -106,6 +106,8 @@ function addElements(e) {
     setDijkstra(idToInt(node.id));
     return;
   }
+  //disable adding nodes on right click
+  if (e.which === 3) return;
 
   let x, y;
   if (node) {

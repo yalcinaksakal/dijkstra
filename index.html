@@ -16,10 +16,15 @@
     <script type="module" defer src="./script.js"></script>
   </head>
   <body>
+    <div class="results-container">
+      <div class="scroll">
+        <div class="results"></div>
+      </div>
+    </div>
     <div class="warn" hidden>Please choose a starting point.</div>
     <div class="dijkstra">
       <div class="find" title="Find shortest path.">Find</div>
-      &nbsp shortest pathes starting from &nbsp
+      shortest pathes starting from &nbsp
       <div class="start">-</div>
       &nbsp to other nodes.
       <div class="animate" title="I may add this functionality later.">
@@ -31,9 +36,10 @@
       Click space to add a node there.<br />
       Click nodes to connect them.<br />
       Right click to choose start node.<br />
+      Hover over line labels to highlight lines.<br />
       Click "Find" to get shortest path.<br />
       Hover over results to see path. <br />
-      Click "Animate" to animate Dijkstra.(Soon i may add.)
+      Click "Animate" to animate.(Soon)
     </div>
     <div class="board"></div>
   </body>
