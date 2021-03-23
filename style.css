@@ -101,6 +101,7 @@ body {
 
   border-radius: 15px;
 }
+.atStart,
 .message:hover {
   font-size: 16px;
   background: rgb(88, 166, 245);
@@ -237,7 +238,7 @@ body {
   .results-container {
     width: 60%;
   }
-  .board{
+  .board {
     height: 70vh;
   }
 }

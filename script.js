@@ -13,6 +13,7 @@ const warnEl = document.querySelector(".warn");
 const findÊl = document.querySelector(".find");
 const resultsEl = document.querySelector(".results");
 const insructions = document.querySelector(".instructions");
+const messageEl = document.querySelector(".message");
 
 export let nodesObj = {};
 
@@ -85,7 +86,7 @@ function showWarn() {
 }
 
 function dijkstra() {
-   if (!dijkstraStart) {
+  if (!dijkstraStart) {
     const fakeRightClickEl = document.querySelector(".selected");
     if (!fakeRightClickEl) {
       showWarn();
@@ -101,7 +102,10 @@ const pxToInt = px => +px.slice(0, -2);
 
 //callback function of mouse events on board
 function addElements(e) {
-  if (!insructions.hidden) insructions.hidden = true;
+  if (!insructions.hidden) {
+    messageEl.classList.remove("atStart");
+    insructions.hidden = true;
+  }
   if (resultsEl.textContent) {
     removehighlightPrev();
     setDijkstra(null);
